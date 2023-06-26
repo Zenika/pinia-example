@@ -1,39 +1,61 @@
 <script setup lang="ts">
-import { useParkingStore } from '../stores/parking';
+import { useParkingStore } from '../stores/parking'
 
 const store = useParkingStore()
 </script>
 
 <template>
-  <div class="parking-list">
-    <h2>Reserved Parking Places</h2>
-    <div class="parking-place" v-for="parkingPlace in store.reservedParkingPlaces" :key="parkingPlace.id">
-      <div class="parking-place-id">{{ parkingPlace.id }}</div>
-      <button class="parking-place-button" @click="store.freeParkingPlace(parkingPlace.id)">Free place</button>
-    </div>
+  <div>
+    <h1 class="parking-list-title">Pinia parking example</h1>
+    <div class="parking-list-main-container">
+      <div>
+        <h1 class="parking-list-title">Reserved places</h1>
+        <h2>{{ store.reservedParkingPlaces.length }} reserved parking places:</h2>
+        <div
+          class="parking-list-button-container"
+          v-for="parkingPlace in store.reservedParkingPlaces"
+          :key="parkingPlace.id"
+        >
+          <button class="parking-list-button" @click="store.freeParkingPlace(parkingPlace.id)">
+            Free place n° {{ parkingPlace.id }}
+          </button>
+        </div>
+      </div>
 
-    <br />
-
-    <h2>Available Parking Places</h2>
-    <div class="parking-place" v-for="parkingPlace in store.availableParkingPlaces" :key="parkingPlace.id">
-      <div class="parking-place-id">{{ parkingPlace.id }}</div>
-      <button class="parking-place-button" @click="store.reserveParkingPlace(parkingPlace.id)">Reserve place</button>
+      <div>
+        <h1 class="parking-list-title">Available places</h1>
+        <h2>{{ store.availableParkingPlaces.length }} available parking places:</h2>
+        <div
+          class="parking-list-button-container"
+          v-for="parkingPlace in store.availableParkingPlaces"
+          :key="parkingPlace.id"
+        >
+          <button class="parking-list-button" @click="store.reserveParkingPlace(parkingPlace.id)">
+            Reserve place n° {{ parkingPlace.id }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.parking-list {
-  display: flex;
-  flex-direction: column;
+.parking-list-title {
+  text-align: center;
 }
-.parking-place {
+.parking-list-main-container {
+  margin-top: 32px;
   display: flex;
-  flex-direction: row;
-  padding: 1rem;
+  justify-content: space-around;
 }
 
-.parking-place-id {
-  padding: 0.5rem;
+.parking-list-button {
+  margin-top: 16px;
+  width: 200px;
+  height: 40px;
+}
+
+.parking-list-button-container {
+  text-align: center;
 }
 </style>
